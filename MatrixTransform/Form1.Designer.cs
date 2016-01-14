@@ -31,6 +31,9 @@
             this.components = new System.ComponentModel.Container();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.checkBox_x = new System.Windows.Forms.CheckBox();
+            this.checkBox_y = new System.Windows.Forms.CheckBox();
+            this.checkBox_z = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // timer1
@@ -50,11 +53,50 @@
             this.hScrollBar1.Value = 250;
             this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
             // 
+            // checkBox_x
+            // 
+            this.checkBox_x.AutoSize = true;
+            this.checkBox_x.Checked = true;
+            this.checkBox_x.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_x.Location = new System.Drawing.Point(479, 9);
+            this.checkBox_x.Name = "checkBox_x";
+            this.checkBox_x.Size = new System.Drawing.Size(66, 16);
+            this.checkBox_x.TabIndex = 1;
+            this.checkBox_x.Text = "RotateX";
+            this.checkBox_x.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_y
+            // 
+            this.checkBox_y.AutoSize = true;
+            this.checkBox_y.Checked = true;
+            this.checkBox_y.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_y.Location = new System.Drawing.Point(479, 32);
+            this.checkBox_y.Name = "checkBox_y";
+            this.checkBox_y.Size = new System.Drawing.Size(66, 16);
+            this.checkBox_y.TabIndex = 2;
+            this.checkBox_y.Text = "RotateY";
+            this.checkBox_y.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_z
+            // 
+            this.checkBox_z.AutoSize = true;
+            this.checkBox_z.Checked = true;
+            this.checkBox_z.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_z.Location = new System.Drawing.Point(479, 55);
+            this.checkBox_z.Name = "checkBox_z";
+            this.checkBox_z.Size = new System.Drawing.Size(66, 16);
+            this.checkBox_z.TabIndex = 3;
+            this.checkBox_z.Text = "RotateZ";
+            this.checkBox_z.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 560);
+            this.Controls.Add(this.checkBox_z);
+            this.Controls.Add(this.checkBox_y);
+            this.Controls.Add(this.checkBox_x);
             this.Controls.Add(this.hScrollBar1);
             this.DoubleBuffered = true;
             this.Name = "Form1";
@@ -62,6 +104,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -69,6 +112,9 @@
 
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.HScrollBar hScrollBar1;
+        private System.Windows.Forms.CheckBox checkBox_x;
+        private System.Windows.Forms.CheckBox checkBox_y;
+        private System.Windows.Forms.CheckBox checkBox_z;
     }
 }
 

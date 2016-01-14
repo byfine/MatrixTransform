@@ -47,5 +47,19 @@ namespace MatrixTransform
 
             return newV;
         }
+
+        /// <summary>
+        /// 求转置矩阵
+        /// </summary>
+        public Matrix4x4 Transpose()
+        {
+            Matrix4x4 t =new Matrix4x4();
+            for (int i = 1; i <= 4; i++){
+                for (int j = 1; j <= 4; j++){
+                    t[i, j] = this[j, i];
+                }
+            }
+            return t;
+        }
     }
 }

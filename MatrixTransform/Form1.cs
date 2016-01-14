@@ -16,7 +16,10 @@ namespace MatrixTransform
         Triangle3D triangle3D;
 
         private Matrix4x4 mScale; // 缩放矩阵
-        private Matrix4x4 mRotation;// 旋转矩阵
+
+        private Matrix4x4 mRotationX;// X旋转矩阵
+        private Matrix4x4 mRotationY;// Y旋转矩阵
+        private Matrix4x4 mRotationZ;// Z旋转矩阵
         
         private float camDistance = 250f; // 摄像机距离
         private Matrix4x4 mView; // 视图（摄像机）矩阵
@@ -28,7 +31,9 @@ namespace MatrixTransform
             InitializeComponent();
 
             mScale = new Matrix4x4();
-            mRotation = new Matrix4x4();
+            mRotationX = new Matrix4x4();
+            mRotationY = new Matrix4x4();
+            mRotationZ = new Matrix4x4();
             mView = new Matrix4x4();
             mProjection = new Matrix4x4();
 
@@ -74,16 +79,53 @@ namespace MatrixTransform
             angle += 2;
             double rAngle = angle / 360f * Math.PI;
 
-            // 更新旋转矩阵
-            mRotation[1, 1] = Math.Cos(rAngle);
-            mRotation[1, 3] = Math.Sin(rAngle);
-            mRotation[2, 2] = 1;
-            mRotation[3, 1] = -Math.Sin(rAngle);
-            mRotation[3, 3] = Math.Cos(rAngle);
-            mRotation[4, 4] = 1;
+            // 更新绕x旋转矩阵
+            mRotationX[1, 1] = 1;
+            mRotationX[2, 2] = Math.Cos(rAngle);
+            mRotationX[2, 3] = Math.Sin(rAngle);
+            mRotationX[3, 2] = -Math.Sin(rAngle);
+            mRotationX[3, 3] = Math.Cos(rAngle);
+            mRotationX[4, 4] = 1;
+            
+            // 更新绕y旋转矩阵
+            mRotationY[1, 1] = Math.Cos(rAngle);
+            mRotationY[1, 3] = Math.Sin(rAngle);
+            mRotationY[2, 2] = 1;
+            mRotationY[3, 1] = -Math.Sin(rAngle);
+            mRotationY[3, 3] = Math.Cos(rAngle);
+            mRotationY[4, 4] = 1;
+
+            // 更新绕z旋转矩阵
+            mRotationZ[1, 1] = Math.Cos(rAngle);
+            mRotationZ[1, 2] = Math.Sin(rAngle);
+            mRotationZ[2, 1] = -Math.Sin(rAngle);
+            mRotationZ[2, 2] = Math.Cos(rAngle);
+            mRotationZ[4, 4] = 1;
+
+
+            
+            //撤销X轴旋转效果
+            if (!checkBox_x.Checked)
+            {
+                //乘以转置矩阵等效于乘以逆矩阵
+                mRotationX = mRotationX.Mul(mRotationX.Transpose());
+            }
+            //撤销Y轴旋转效果
+            if (!checkBox_y.Checked)
+            {
+                //乘以转置矩阵等效于乘以逆矩阵
+                mRotationY = mRotationY.Mul(mRotationY.Transpose());
+            }
+            //撤销Z轴旋转效果
+            if (!checkBox_z.Checked)
+            {
+                //乘以转置矩阵等效于乘以逆矩阵
+                mRotationZ = mRotationZ.Mul(mRotationZ.Transpose());
+            }
 
             // 组合模型矩阵
-            Matrix4x4 m = mScale.Mul(mRotation);
+            Matrix4x4 m = mScale;
+            m = m.Mul(mRotationX.Mul(mRotationY.Mul(mRotationZ)));
 
             // 应用视图矩阵
             Matrix4x4 mv = m.Mul(mView);
@@ -104,9 +146,9 @@ namespace MatrixTransform
         private Triangle3D CreateTriangle3D()
         {
             // 在局部空间定义顶点
-            Vector4 a = new Vector4(0, -0.5f, 0, 1);
-            Vector4 b = new Vector4(0.5f, 0.5f, 0, 1);
-            Vector4 c = new Vector4(-0.5f, 0.5f, 0, 1);
+            Vector4 a = new Vector4(0, 0.5f, 0, 1);
+            Vector4 b = new Vector4(0.5f, -0.5f, 0, 1);
+            Vector4 c = new Vector4(-0.5f, -0.5f, 0, 1);
 
             return new Triangle3D(a, b, c);
         }
