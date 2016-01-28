@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MatrixTransform
 {
     public partial class Form1 : Form
     {
-        Triangle2D triangle2D;
-        Triangle3D triangle3D;
+
+        private bool drawCube = true;
+
+        private Triangle3D triangle3D;
+        private Cube cube;
 
         private Matrix4x4 mScale; // 缩放矩阵
 
@@ -61,6 +58,7 @@ namespace MatrixTransform
         private void Form1_Load(object sender, EventArgs e)
         {
             triangle3D = CreateTriangle3D();
+            cube = new Cube();
         }
 
 
@@ -68,15 +66,22 @@ namespace MatrixTransform
         {
             // 平移坐标系
             e.Graphics.TranslateTransform(300, 300);
-            // 绘制三角形
-            triangle3D.Draw(e.Graphics);
+
+            if (drawCube){
+                // 绘制矩形
+                cube.Draw(e.Graphics, checkBox_isLine.Checked);
+            }
+            else{
+                // 绘制三角形
+                triangle3D.Draw(e.Graphics, checkBox_isLine.Checked);
+            }
         }
 
         private int angle;
         private void timer1_Tick(object sender, EventArgs e)
         {
             // 角度变化
-            angle += 2;
+            angle += 3;
             double rAngle = angle / 360f * Math.PI;
 
             // 更新绕x旋转矩阵
@@ -86,7 +91,7 @@ namespace MatrixTransform
             mRotationX[3, 2] = -Math.Sin(rAngle);
             mRotationX[3, 3] = Math.Cos(rAngle);
             mRotationX[4, 4] = 1;
-            
+
             // 更新绕y旋转矩阵
             mRotationY[1, 1] = Math.Cos(rAngle);
             mRotationY[1, 3] = Math.Sin(rAngle);
@@ -95,46 +100,64 @@ namespace MatrixTransform
             mRotationY[3, 3] = Math.Cos(rAngle);
             mRotationY[4, 4] = 1;
 
-            // 更新绕z旋转矩阵
+            //// 更新绕z旋转矩阵
             mRotationZ[1, 1] = Math.Cos(rAngle);
             mRotationZ[1, 2] = Math.Sin(rAngle);
             mRotationZ[2, 1] = -Math.Sin(rAngle);
             mRotationZ[2, 2] = Math.Cos(rAngle);
+            mRotationZ[3, 3] = 1;
             mRotationZ[4, 4] = 1;
 
 
-            
+
             //撤销X轴旋转效果
-            if (!checkBox_x.Checked)
+            if (checkBox_x.Checked)
             {
                 //乘以转置矩阵等效于乘以逆矩阵
-                mRotationX = mRotationX.Mul(mRotationX.Transpose());
+                Matrix4x4 tx = mRotationX.Transpose();
+                mRotationX = mRotationX.Mul(tx);
             }
             //撤销Y轴旋转效果
-            if (!checkBox_y.Checked)
+            if (checkBox_y.Checked)
             {
                 //乘以转置矩阵等效于乘以逆矩阵
-                mRotationY = mRotationY.Mul(mRotationY.Transpose());
+                Matrix4x4 ty = mRotationY.Transpose();
+                mRotationY = mRotationY.Mul(ty);
             }
             //撤销Z轴旋转效果
-            if (!checkBox_z.Checked)
+            if (checkBox_z.Checked)
             {
                 //乘以转置矩阵等效于乘以逆矩阵
-                mRotationZ = mRotationZ.Mul(mRotationZ.Transpose());
+                Matrix4x4 tz = mRotationZ.Transpose();
+                mRotationZ = mRotationZ.Mul(tz);
             }
+            Matrix4x4 mall = mRotationX.Mul(mRotationY.Mul(mRotationZ));
 
             // 组合模型矩阵
-            Matrix4x4 m = mScale;
-            m = m.Mul(mRotationX.Mul(mRotationY.Mul(mRotationZ)));
+            Matrix4x4 m = mScale.Mul(mall);
+
+
+            if (drawCube){
+                cube.CalculateLighting(m, new Vector4(-1, 1, -1, 0));
+            }
+            else{
+                triangle3D.CalculateLighting(m, new Vector4(-1, 1, -1, 0));
+            }
+            
 
             // 应用视图矩阵
             Matrix4x4 mv = m.Mul(mView);
 
             // 应用投影矩阵
             Matrix4x4 mvp = mv.Mul(mProjection);
-            
-            // 对三角形应用变换矩阵
-            triangle3D.Transform(mvp);
+
+            // 应用变换矩阵
+            if (drawCube){
+                cube.Transform(mvp);
+            }
+            else{
+                triangle3D.Transform(mvp);
+            }
 
             this.Invalidate();
         }
@@ -168,6 +191,11 @@ namespace MatrixTransform
         {
             camDistance = (sender as ScrollBar).Value;
             mView[4, 3] = camDistance;
+        }
+
+        private void checkBox_drawCube_CheckedChanged(object sender, EventArgs e)
+        {
+            drawCube = checkBox_drawCube.Checked;
         }
     }
 }

@@ -34,6 +34,8 @@
             this.checkBox_x = new System.Windows.Forms.CheckBox();
             this.checkBox_y = new System.Windows.Forms.CheckBox();
             this.checkBox_z = new System.Windows.Forms.CheckBox();
+            this.checkBox_isLine = new System.Windows.Forms.CheckBox();
+            this.checkBox_drawCube = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // timer1
@@ -56,44 +58,64 @@
             // checkBox_x
             // 
             this.checkBox_x.AutoSize = true;
-            this.checkBox_x.Checked = true;
-            this.checkBox_x.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_x.Location = new System.Drawing.Point(479, 9);
+            this.checkBox_x.Location = new System.Drawing.Point(366, 9);
             this.checkBox_x.Name = "checkBox_x";
-            this.checkBox_x.Size = new System.Drawing.Size(66, 16);
+            this.checkBox_x.Size = new System.Drawing.Size(96, 16);
             this.checkBox_x.TabIndex = 1;
-            this.checkBox_x.Text = "RotateX";
+            this.checkBox_x.Text = "Dont RotateX";
             this.checkBox_x.UseVisualStyleBackColor = true;
             // 
             // checkBox_y
             // 
             this.checkBox_y.AutoSize = true;
-            this.checkBox_y.Checked = true;
-            this.checkBox_y.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_y.Location = new System.Drawing.Point(479, 32);
+            this.checkBox_y.Location = new System.Drawing.Point(366, 32);
             this.checkBox_y.Name = "checkBox_y";
-            this.checkBox_y.Size = new System.Drawing.Size(66, 16);
+            this.checkBox_y.Size = new System.Drawing.Size(96, 16);
             this.checkBox_y.TabIndex = 2;
-            this.checkBox_y.Text = "RotateY";
+            this.checkBox_y.Text = "Dont RotateY";
             this.checkBox_y.UseVisualStyleBackColor = true;
             // 
             // checkBox_z
             // 
             this.checkBox_z.AutoSize = true;
-            this.checkBox_z.Checked = true;
-            this.checkBox_z.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_z.Location = new System.Drawing.Point(479, 55);
+            this.checkBox_z.Location = new System.Drawing.Point(366, 55);
             this.checkBox_z.Name = "checkBox_z";
-            this.checkBox_z.Size = new System.Drawing.Size(66, 16);
+            this.checkBox_z.Size = new System.Drawing.Size(96, 16);
             this.checkBox_z.TabIndex = 3;
-            this.checkBox_z.Text = "RotateZ";
+            this.checkBox_z.Text = "Dont RotateZ";
             this.checkBox_z.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_isLine
+            // 
+            this.checkBox_isLine.AutoSize = true;
+            this.checkBox_isLine.Location = new System.Drawing.Point(476, 9);
+            this.checkBox_isLine.Name = "checkBox_isLine";
+            this.checkBox_isLine.Size = new System.Drawing.Size(66, 16);
+            this.checkBox_isLine.TabIndex = 4;
+            this.checkBox_isLine.Text = "is Line";
+            this.checkBox_isLine.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_drawCube
+            // 
+            this.checkBox_drawCube.AutoSize = true;
+            this.checkBox_drawCube.Checked = true;
+            this.checkBox_drawCube.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_drawCube.Location = new System.Drawing.Point(476, 32);
+            this.checkBox_drawCube.Name = "checkBox_drawCube";
+            this.checkBox_drawCube.Size = new System.Drawing.Size(102, 16);
+            this.checkBox_drawCube.TabIndex = 5;
+            this.checkBox_drawCube.Text = "Cube/Triangle";
+            this.checkBox_drawCube.UseVisualStyleBackColor = true;
+            this.checkBox_drawCube.CheckedChanged += new System.EventHandler(this.checkBox_drawCube_CheckedChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(584, 560);
+            this.Controls.Add(this.checkBox_drawCube);
+            this.Controls.Add(this.checkBox_isLine);
             this.Controls.Add(this.checkBox_z);
             this.Controls.Add(this.checkBox_y);
             this.Controls.Add(this.checkBox_x);
@@ -115,6 +137,8 @@
         private System.Windows.Forms.CheckBox checkBox_x;
         private System.Windows.Forms.CheckBox checkBox_y;
         private System.Windows.Forms.CheckBox checkBox_z;
+        private System.Windows.Forms.CheckBox checkBox_isLine;
+        private System.Windows.Forms.CheckBox checkBox_drawCube;
     }
 }
 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace MatrixTransform
 {
     class Matrix4x4
@@ -24,6 +19,9 @@ namespace MatrixTransform
             set { pts[i - 1, j - 1] = value; }
         }
 
+        /// <summary>
+        /// 矩阵乘法
+        /// </summary>
         public Matrix4x4 Mul(Matrix4x4 m)
         {
             Matrix4x4 newM = new Matrix4x4();
@@ -37,6 +35,9 @@ namespace MatrixTransform
             return newM;
         }
 
+        /// <summary>
+        /// 矩阵乘法
+        /// </summary>
         public Vector4 Mul(Vector4 v)
         {
             Vector4 newV = new Vector4();
