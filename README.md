@@ -1,4 +1,6 @@
 # MatrixTransform
 A C# 3D matrix transform demo
 
-Draw a 2d triangle, and use model(scale/rotation)、view、projection matrix on it.
+使用C#实现矩阵变换。模拟model、view、projection矩阵。
+绘制三角面和cube。
+模拟简单光照计算。
